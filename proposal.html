@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JPG Travel Solutions | Your Growth Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #060606;
+  --black-light: #0c0c0c;
+  --surface: #111111;
+  --surface-light: #1a1a1a;
+  --border: #222222;
+  --border-light: #2a2a2a;
+  --gold: #C9A96E;
+  --gold-light: #D4BA85;
+  --gold-dim: rgba(201, 169, 110, 0.15);
+  --gold-glow: rgba(201, 169, 110, 0.08);
+  --white: #f5f0eb;
+  --white-dim: rgba(245, 240, 235, 0.7);
+  --white-muted: rgba(245, 240, 235, 0.4);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* GRAIN OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* REVEAL ANIMATIONS */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+.reveal-delay-4 { transition-delay: 0.6s; }
+.reveal-delay-5 { transition-delay: 0.75s; }
+.reveal-delay-6 { transition-delay: 0.9s; }
+
+/* SIDE NAV / TABLE OF CONTENTS */
+.side-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  background: rgba(6, 6, 6, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid var(--border);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 80px 32px 40px;
+  overflow-y: auto;
+}
+.side-nav.open { transform: translateX(0); }
+.side-nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.side-nav-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.side-nav-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+}
+.side-nav a {
+  display: block;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: var(--white-muted);
+  text-decoration: none;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: color 0.3s, padding-left 0.3s;
+}
+.side-nav a:hover,
+.side-nav a.active {
+  color: var(--gold);
+  padding-left: 8px;
+}
+.side-nav a span {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gold);
+  margin-right: 10px;
+  opacity: 0.5;
+}
+
+/* NAV TOGGLE BUTTON */
+.nav-toggle {
+  position: fixed;
+  top: 28px;
+  left: 28px;
+  z-index: 1001;
+  width: 44px;
+  height: 44px;
+  background: rgba(17, 17, 17, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.3s ease;
+}
+.nav-toggle:hover { border-color: var(--gold); }
+.nav-toggle span {
+  width: 18px;
+  height: 1.5px;
+  background: var(--gold);
+  transition: all 0.3s ease;
+  display: block;
+}
+.nav-toggle.open span:nth-child(1) {
+  transform: rotate(45deg) translateY(4.5px) translateX(4.5px);
+}
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-4.5px) translateX(4.5px);
+}
+
+/* PROGRESS BAR */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  z-index: 10000;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+/* SECTION STYLES */
+section {
+  position: relative;
+}
+
+.section-pad {
+  padding: 120px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-number {
+  font-family: var(--serif);
+  font-size: 72px;
+  font-weight: 300;
+  color: var(--gold);
+  opacity: 0.12;
+  line-height: 1;
+  margin-bottom: -20px;
+}
+
+.section-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.section-label::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+
+.section-subtitle {
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--white-dim);
+  line-height: 1.8;
+  max-width: 720px;
+}
+
+.gold-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin: 32px 0;
+}
+
+/* DIVIDER BETWEEN SECTIONS */
+.section-divider {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 48px;
+  height: 1px;
+}
+.section-divider::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80') center/cover no-repeat;
+  filter: brightness(0.25) saturate(0.8);
+  transform: scale(1.05);
+  transition: transform 8s ease-out;
+}
+.hero.loaded .hero-bg { transform: scale(1); }
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6,6,6,0.4) 0%, rgba(6,6,6,0.7) 50%, var(--black) 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 24px;
+}
+.hero-brand {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #B8943F, var(--gold-light), #E8D5A3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 48px;
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(42px, 7vw, 88px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.08;
+  margin-bottom: 24px;
+  letter-spacing: -1px;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+.hero-sub {
+  font-family: var(--sans);
+  font-size: clamp(14px, 1.8vw, 17px);
+  font-weight: 300;
+  color: var(--white-dim);
+  max-width: 580px;
+  margin: 0 auto 48px;
+  line-height: 1.7;
+  letter-spacing: 0.5px;
+}
+.hero-meta {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+}
+.hero-meta strong {
+  color: var(--gold);
+  font-weight: 500;
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--white-muted);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: pulse-down 2s infinite;
+}
+.hero-scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(180deg, var(--gold), transparent);
+}
+@keyframes pulse-down {
+  0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 0.8; transform: translateX(-50%) translateY(6px); }
+}
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 36px;
+  transition: border-color 0.4s, transform 0.4s;
+}
+.card:hover {
+  border-color: rgba(201, 169, 110, 0.3);
+  transform: translateY(-2px);
+}
+.card-icon {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--gold-dim);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.card-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--gold);
+  fill: none;
+  stroke-width: 1.5;
+}
+.card h3 {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+.card p {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--white-dim);
+  line-height: 1.7;
+}
+
+/* GRID LAYOUTS */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* STAT BLOCK */
+.stat-block {
+  text-align: center;
+  padding: 40px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.stat-number {
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+}
+
+/* CALLOUT BOX */
+.callout {
+  background: linear-gradient(135deg, var(--gold-glow), rgba(201,169,110,0.03));
+  border: 1px solid rgba(201, 169, 110, 0.2);
+  border-left: 3px solid var(--gold);
+  padding: 32px 36px;
+  margin: 40px 0;
+  border-radius: 2px;
+}
+.callout p {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.6;
+}
+.callout .callout-attr {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 16px;
+}
+
+/* COMPARISON TABLE */
+.compare-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 32px;
+  align-items: center;
+  margin: 48px 0;
+}
+.compare-card {
+  padding: 40px;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+}
+.compare-card.old { background: var(--surface); }
+.compare-card.new {
+  background: linear-gradient(135deg, var(--gold-glow), rgba(201,169,110,0.05));
+  border-color: rgba(201,169,110,0.3);
+}
+.compare-vs {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--gold);
+  opacity: 0.6;
+}
+.compare-price {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+.compare-card.old .compare-price { color: var(--white-muted); text-decoration: line-through; }
+.compare-card.new .compare-price { color: var(--gold); }
+.compare-desc {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--white-dim);
+}
+
+/* FREE STACK TABLE */
+.stack-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 40px 0;
+}
+.stack-table th {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: left;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.stack-table td {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--white-dim);
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: top;
+}
+.stack-table td:first-child {
+  color: var(--white);
+  font-weight: 400;
+}
+.stack-table td:last-child {
+  color: var(--gold);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+/* TIMELINE */
+.timeline {
+  position: relative;
+  padding-left: 40px;
+  margin: 48px 0;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, var(--gold), var(--border), transparent);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 48px;
+}
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -44px;
+  top: 8px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 12px rgba(201,169,110,0.3);
+}
+.timeline-phase {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.timeline-title {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.timeline-desc {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--white-dim);
+  line-height: 1.7;
+}
+
+/* BENEFIT LIST */
+.benefit-list {
+  list-style: none;
+  margin: 32px 0;
+}
+.benefit-list li {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--white-dim);
+  padding: 16px 0;
+  padding-left: 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  position: relative;
+  line-height: 1.6;
+}
+.benefit-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 22px;
+  width: 8px;
+  height: 1px;
+  background: var(--gold);
+}
+
+/* APP MOCKUP */
+.app-mockup {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 380px;
+  margin: 0 auto;
+}
+.app-header {
+  background: linear-gradient(135deg, #0a0a0a, #141414);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.app-header-title {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+.app-status {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--white-muted);
+}
+.app-body { padding: 20px; }
+.app-day {
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.app-day-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.app-day-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.app-day-desc {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--white-muted);
+}
+.app-day-time {
+  font-size: 11px;
+  color: var(--white-dim);
+  margin-top: 4px;
+}
+.app-cta {
+  display: block;
+  text-align: center;
+  padding: 14px;
+  margin: 16px 0 4px;
+  background: var(--gold);
+  color: var(--black);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 80px 48px;
+  border-top: 1px solid var(--border);
+}
+.footer-brand {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #B8943F, var(--gold-light), #E8D5A3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+}
+.footer-tagline {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--white-muted);
+  margin-bottom: 24px;
+}
+.footer-contact {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--white-muted);
+  letter-spacing: 1px;
+}
+.footer-contact a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+/* IMAGE BREAK SECTIONS */
+.image-break {
+  position: relative;
+  height: 50vh;
+  min-height: 360px;
+  overflow: hidden;
+}
+.image-break-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.3) saturate(0.7);
+}
+.image-break-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--black) 0%, transparent 20%, transparent 80%, var(--black) 100%);
+}
+.image-break-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 48px;
+}
+.image-break-quote {
+  font-family: var(--serif);
+  font-size: clamp(24px, 3.5vw, 42px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--white);
+  max-width: 700px;
+  line-height: 1.4;
+}
+
+/* SPLIT LAYOUT */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.split-reverse { direction: rtl; }
+.split-reverse > * { direction: ltr; }
+
+/* BOARD VISUAL */
+.board-visual {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin: 40px 0;
+}
+.board-col {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 16px 12px;
+  min-height: 180px;
+}
+.board-col-header {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.board-item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 2px;
+  padding: 10px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--white-dim);
+  line-height: 1.4;
+}
+.board-item.gold-border {
+  border-color: rgba(201,169,110,0.25);
+  background: var(--gold-glow);
+}
+
+/* AI FEATURE GRID */
+.ai-features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin: 40px 0;
+}
+.ai-feature {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.4s;
+}
+.ai-feature:hover { border-color: rgba(201,169,110,0.3); }
+.ai-feature::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.ai-feature:hover::before { opacity: 1; }
+.ai-feature h4 {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.ai-feature p {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--white-dim);
+  line-height: 1.6;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .section-pad { padding: 100px 32px; }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .board-visual { grid-template-columns: repeat(3, 1fr); }
+  .split { grid-template-columns: 1fr; gap: 48px; }
+  .compare-row { grid-template-columns: 1fr; gap: 16px; }
+}
+@media (max-width: 768px) {
+  .section-pad { padding: 80px 20px; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .board-visual { grid-template-columns: repeat(2, 1fr); }
+  .ai-features { grid-template-columns: 1fr; }
+  .hero { min-height: 100vh; }
+  .section-number { font-size: 48px; }
+  .nav-toggle { top: 16px; left: 16px; }
+}
+@media (max-width: 480px) {
+  .board-visual { grid-template-columns: 1fr; }
+  .section-pad { padding: 60px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- NAV TOGGLE -->
+<button class="nav-toggle" id="navToggle" aria-label="Table of Contents">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+<!-- SIDE NAV -->
+<div class="side-nav-overlay" id="sideNavOverlay"></div>
+<nav class="side-nav" id="sideNav">
+  <div class="side-nav-label">Table of Contents</div>
+  <a href="#deep-dive"><span>01</span>The Deep Dive</a>
+  <a href="#bottleneck"><span>02</span>The Bottleneck Problem</a>
+  <a href="#monday"><span>03</span>Monday.com Automation</a>
+  <a href="#ai-agent"><span>04</span>The AI Agent</a>
+  <a href="#client-app"><span>05</span>Client App</a>
+  <a href="#website"><span>06</span>Website Redesign</a>
+  <a href="#seo"><span>07</span>SEO &amp; Digital Strategy</a>
+  <a href="#free-stack"><span>08</span>The Free Stack</a>
+  <a href="#mrs-paula"><span>09</span>For Mrs. Paula</a>
+  <a href="#next-steps"><span>10</span>Next Steps</a>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-brand reveal">JPG Travel Solutions</div>
+    <h1 class="hero-title reveal reveal-delay-1">The JPG<br><em>Transformation</em></h1>
+    <p class="hero-sub reveal reveal-delay-2">A comprehensive strategy to automate, scale, and elevate your business into its next chapter.</p>
+    <p class="hero-meta reveal reveal-delay-3">Prepared by <strong>Jaden Flynn</strong> &nbsp;|&nbsp; Flynn Development</p>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ==================== THE DEEP DIVE ==================== -->
+<section id="deep-dive">
+  <div class="section-pad">
+    <div class="section-number reveal">01</div>
+    <div class="section-label reveal reveal-delay-1">The Deep Dive</div>
+    <h2 class="section-title reveal reveal-delay-2">We did our homework.</h2>
+    <div class="gold-line reveal reveal-delay-2"></div>
+    <p class="section-subtitle reveal reveal-delay-3">
+      Before putting this plan together, we went deep. We studied the luxury travel industry, researched the host agency model from top to bottom, and analyzed the specific challenges that high-performing advisors face when they start scaling.
+    </p>
+    <br>
+    <p class="section-subtitle reveal reveal-delay-3">
+      We reviewed your current website, studied your competitive landscape, and identified exactly where intelligent automation can transform the way your team operates. We looked at what the top agencies in the country are doing, where the industry is headed, and how to position JPG to lead rather than follow.
+    </p>
+
+    <div class="grid-3" style="margin-top: 56px;">
+      <div class="card reveal reveal-delay-1">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3>Industry Analysis</h3>
+        <p>Comprehensive research into the luxury travel market, host agency structures, commission models, and where the industry is moving in 2026 and beyond.</p>
+      </div>
+      <div class="card reveal reveal-delay-2">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h3>Competitive Landscape</h3>
+        <p>We studied what the highest-performing agencies are doing digitally and identified the gaps that give JPG a real competitive edge with the right tools in place.</p>
+      </div>
+      <div class="card reveal reveal-delay-3">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Team Workflow Review</h3>
+        <p>We're looking forward to meeting with the full JPG team to dive even deeper into your specific workflows, pain points, and the day-to-day reality of running your operation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ==================== THE BOTTLENECK PROBLEM ==================== -->
+<section id="bottleneck">
+  <div class="section-pad">
+    <div class="section-number reveal">02</div>
+    <div class="section-label reveal reveal-delay-1">The Bottleneck Problem</div>
+    <h2 class="section-title reveal reveal-delay-2">When success becomes the ceiling.</h2>
+    <div class="gold-line reveal reveal-delay-2"></div>
+    <p class="section-subtitle reveal reveal-delay-3">
+      Here is the pattern we see again and again in the luxury travel space: once an advisor crosses the $1-2M annual sales mark, they hit a wall. Not because of demand. Because of time.
+    </p>
+
+    <div class="grid-4" style="margin-top: 56px;">
+      <div class="stat-block reveal reveal-delay-1">
+        <div class="stat-number">30-40%</div>
+        <div class="stat-label">Time spent on destination research</div>
+      </div>
+      <div class="stat-block reveal reveal-delay-2">
+        <div class="stat-number">15-25%</div>
+        <div class="stat-label">Time on itinerary &amp; proposals</div>
+      </div>
+      <div class="stat-block reveal reveal-delay-3">
+        <div class="stat-number">20-30%</div>
+        <div class="stat-label">Time on email management</div>
+      </div>
+      <div class="stat-block reveal reveal-delay-4">
+        <div class="stat-number">85%+</div>
+        <div class="stat-label">Of the workday consumed</div>
+      </div>
+    </div>
+
+    <div class="section-subtitle reveal" style="margin-top: 48px;">
+      The typical solution? Hire an assistant at $1,500 to $3,000 per month. But our research shows that software can handle 60-70% of the work that assistant would do, at a fraction of the cost. This is not about replacing people. It is about removing the repetitive weight so your team can spend their time where it actually matters.
+    </div>
+
+    <div class="callout reveal" style="margin-top: 48px;">
+      <p>Mrs. Paula, this plan is designed to take the weight off your shoulders. The systems we are building will handle the repetitive work so you and your team can focus on what you do best: creating incredible travel experiences for your clients.</p>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGE BREAK -->
+<div class="image-break">
+  <div class="image-break-bg" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80');"></div>
+  <div class="image-break-overlay"></div>
+  <div class="image-break-content">
+    <p class="image-break-quote reveal">"The goal is not to work harder. The goal is to build the systems that let you work on what matters."</p>
+  </div>
+</div>
+
+<!-- ==================== MONDAY.COM AUTOMATION ==================== -->
+<section id="monday">
+  <div class="section-pad">
+    <div class="section-number reveal">03</div>
+    <div class="section-label reveal reveal-delay-1">Monday.com Automation</div>
+    <h2 class="section-title reveal reveal-delay-2">Supercharging what you already use.</h2>
+    <div class="gold-line reveal reveal-delay-2"></div>
+    <p class="section-subtitle reveal reveal-delay-3">
+      You are already on Monday.com. That is a major advantage. Instead of learning something new, we are going to unlock the full potential of the platform you already know and trust. Custom board architecture, automated workflows, and cross-board connections that make everything talk to each other.
+    </p>
+
+    <!-- BOARD VISUAL -->
+    <div class="board-visual reveal" style="margin-top: 56px;">
+      <div class="board-col">
+        <div class="board-col-header">Leads Pipeline</div>
+        <div class="board-item gold-border">New inquiry from website</div>
+        <div class="board-item">Consultation scheduled</div>
+        <div class="board-item">Proposal sent</div>
+        <div class="board-item">Follow-up due</div>
+      </div>
+      <div class="board-col">
+        <div class="board-col-header">Active Bookings</div>
+        <div class="board-item gold-border">Maldives - Johnson</div>
+        <div class="board-item">Italy - Thompson</div>
+        <div class="board-item">Bali - Garcia</div>
+      </div>
+      <div class="board-col">
+        <div class="board-col-header">Payments</div>
+        <div class="board-item">Deposit due 4/15</div>
+        <div class="board-item gold-border">Final payment 5/1</div>
+        <div class="board-item">Confirmation sent</div>
+      </div>
+      <div class="board-col">
+        <div class="board-col-header">Commissions</div>
+        <div class="board-item">Marriott - pending</div>
+        <div class="board-item gold-border">Virtuoso - received</div>
+        <div class="board-item">Delta - tracking</div>
+      </div>
+      <div class="board-col">
+        <div class="board-col-header">Client Database</div>
+        <div class="board-item">Preferences stored</div>
+        <div class="board-item gold-border">Anniversary 6/12</div>
+        <div class="board-item">Birthday outreach</div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--serif); font-size: 28px; font-weight: 400; margin-top: 64px; margin-bottom: 32px;" class="reveal">Automated Workflows</h3>
+
+    <div class="grid-2 reveal">
+      <div class="card">
+        <h3>Payment Lifecycle</h3>
+        <p>Automatic reminders for deposit deadlines, final payments, and confirmation sends. No more manually tracking dates across spreadsheets. The system notifies you and the client at every stage.</p>
+      </div>
+      <div class="card">
+        <h3>Client Communication Sequences</h3>
+        <p>Pre-trip excitement emails, packing lists, and destination tips sent automatically based on departure dates. Post-trip follow-ups and review requests triggered on return.</p>
+      </div>
+      <div class="card">
+        <h3>Birthday &amp; Anniversary Outreach</h3>
+        <p>Automated personal-touch messages for client birthdays, anniversaries, and travel milestones. The kind of details that turn one-time clients into lifelong relationships.</p>
+      </div>
+      <div class="card">
+        <h3>Document Collection</h3>
+        <p>Passport copies, travel insurance, dietary requirements, emergency contacts. Automated requests go out on a timeline, with reminders for anything missing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ==================== THE AI AGENT ==================== -->
+<section id="ai-agent">
+  <div class="section-pad">
+    <div class="section-number reveal">04</div>
+    <div class="section-label reveal reveal-delay-1">The AI Agent</div>
+    <h2 class="section-title reveal reveal-delay-2">Your private research assistant<br>that never sleeps.</h2>
+    <div class="gold-line reveal reveal-delay-2"></div>
+    <p class="section-subtitle reveal reveal-delay-3">
+      This is the game-changer. A custom AI agent built exclusively for JPG Travel Solutions, living directly inside Monday.com as a private app. Monday.com just launched their AI agent platform in March 2026, and the timing could not be better. This is not a generic chatbot. It is a purpose-built assistant trained on the luxury travel workflow.
+    </p>
+
+    <div class="ai-features reveal">
+      <div class="ai-feature">
+        <h4>Destination Research on Command</h4>
+        <p>Ask the agent to research a destination, resort, or experience. It returns structured data, reviews, pricing context, and insider recommendations directly to the booking item in Monday.</p>
+      </div>
+      <div class="ai-feature">
+        <h4>Itinerary Draft Generation</h4>
+        <p>Give it client preferences, dates, and a destination. It produces a polished first-draft itinerary that your advisors can refine and personalize, saving hours per booking.</p>
+      </div>
+      <div class="ai-feature">
+        <h4>Lead Categorization</h4>
+        <p>New leads from the website get automatically categorized by travel type, budget tier, and urgency. The right advisor sees the right lead with the right context immediately.</p>
+      </div>
+      <div class="ai-feature">
+        <h4>Client Communication Drafts</h4>
+        <p>Draft professional emails, follow-ups, and proposals in your brand voice. Your advisors review and send, keeping the human touch that luxury clients expect while saving significant drafting time.</p>
+      </div>
+      <div class="ai-feature">
+        <h4>Commission Tracking</h4>
+        <p>Cross-reference expected commissions with received payments. Flag discrepancies automatically. No more money falling through the cracks because someone forgot to follow up with a supplier.</p>
+      </div>
+      <div class="ai-feature">
+        <h4>Smart Suggestions</h4>
+        <p>Posts proactive suggestions to active bookings: restaurant recommendations, seasonal alerts, visa requirement changes, flight schedule updates. Your advisors always have the most current intelligence.</p>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <p>Important: this agent assists. It does not replace the human expertise and personal relationships that make luxury travel special. Specific permissions and guardrails ensure it stays in its lane while making your team dramatically more efficient.</p>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGE BREAK -->
+<div class="image-break">
+  <div class="image-break-bg" style="background-image: url('https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920&q=80');"></div>
+  <div class="image-break-overlay"></div>
+  <div class="image-break-content">
+    <p class="image-break-quote reveal">"Technology should be invisible. Your clients should only feel the magic."</p>
+  </div>
+</div>
+
+<!-- ==================== CLIENT APP ==================== -->
+<section id="client-app">
+  <div class="section-pad">
+    <div class="section-number reveal">05</div>
+    <div class="section-label reveal reveal-delay-1">Branded Client App</div>
+    <h2 class="section-title reveal reveal-delay-2">Replace the app you are paying for<br>with one that is actually yours.</h2>
+    <div class="gold-line reveal reveal-delay-2"></div>
+    <p class="section-subtitle reveal reveal-delay-3">
+      Instead of paying for a generic itinerary app with someone else's branding, we build a fully custom client portal branded entirely to JPG Travel Solutions. Mobile-first, works offline (critical for international travel), and accessed via a magic link. No app store download. No login friction. Just a link that opens their entire trip.
+    </p>
+
+    <div class="split" style="margin-top: 64px;">
+      <!-- APP MOCKUP -->
+      <div class="reveal">
+        <div class="app-mockup">
+          <div class="app-header">
+            <div class="app-header-title">JPG Travel</div>
+            <div class="app-status">Santorini 2026</div>
+          </div>
+          <div class="app-body">
+            <div class="app-day">
+              <div class="app-day-label">Day 1 &nbsp;/&nbsp; June 14</div>
+              <div class="app-day-title">Arrival in Santorini</div>
+              <div class="app-day-desc">Private transfer from JTR to Canaves Oia Suites</div>
+              <div class="app-day-time">3:45 PM arrival &nbsp;|&nbsp; Transfer confirmed</div>
+            </div>
+            <div class="app-day">
+              <div class="app-day-label">Day 2 &nbsp;/&nbsp; June 15</div>
+              <div class="app-day-title">Caldera Sailing Excursion</div>
+              <div class="app-day-desc">Private catamaran, sunset dinner included</div>
+              <div class="app-day-time">10:00 AM departure &nbsp;|&nbsp; Dock B, Ammoudi Bay</div>
+            </div>
+            <div class="app-day">
+              <div class="app-day-label">Day 3 &nbsp;/&nbsp; June 16</div>
+              <div class="app-day-title">Wine Country Tour</div>
+              <div class="app-day-desc">Private guide, 3 estate vineyards, lunch at Selene</div>
+              <div class="app-day-time">11:00 AM pickup &nbsp;|&nbsp; Hotel lobby</div>
+            </div>
+            <a class="app-cta" href="#">View Full Itinerary</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- FEATURES LIST -->
+      <div class="reveal reveal-delay-2">
+        <div class="section-label">Features</div>
+        <h3 style="font-family: var(--serif); font-size: 28px; font-weight: 400; margin-bottom: 8px;">Everything your client needs in one place.</h3>
+        <ul class="benefit-list">
+          <li>Day-by-day itinerary with times, locations, and confirmation numbers</li>
+          <li>Hotel photos, maps, and booking documents</li>
+          <li>Magic link access. No download, no passwords, no friction</li>
+          <li>Works offline as a PWA. Opens even without cell service abroad</li>
+          <li>In-app messaging back to the advisor for real-time support</li>
+          <li>Push notifications for itinerary changes or updates</li>
+          <li>Post-trip memory book with photos and highlights</li>
+          <li>Fully branded to JPG Travel Solutions from top to bottom</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ==================== WEBSITE REDESIGN ==================== -->
+<section id="website">
+  <div class="section-pad">
+    <div class="section-number reveal">06</div>
+    <div class="section-label reveal reveal-delay-1">Website Redesign</div>
+    <h2 class="section-title reveal reveal-delay-2">A digital presence that matches<br>the caliber of your service.</h2>
+    <div class="gold-line reveal reveal-delay-2"></div>
+    <p class="section-subtitle reveal reveal-delay-3">
+      The current Wix site does not reflect what JPG Travel Solutions actually delivers. When a high-net-worth client lands on your website, they should immediately feel that they are in the right place. That experience needs to match the five-star trips you create for them.
+    </p>
+    <p class="section-subtitle reveal reveal-delay-3" style="margin-top: 20px;">
+      We have already built a working mockup of what your new site could look like. Dark, cinematic, and built with the same luxury aesthetic that your clients expect from every touchpoint.
+    </p>
+
+    <div class="grid-3 reveal" style="margin-top: 56px;">
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>Cinematic Design</h3>
+        <p>Full-bleed imagery, elegant typography, and a dark luxury palette that makes high-net-worth travelers feel at home before they ever pick up the phone.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+        </div>
+        <h3>SEO Architecture</h3>
+        <p>Proper technical foundation built for search visibility from day one. Meta tags, schema markup, performance optimization, and a content structure that Google rewards.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <h3>Mobile-First</h3>
+        <p>Over 60% of luxury travel searches happen on mobile. Every pixel is designed for flawless performance on any device, from a phone screen to a 4K monitor.</p>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top: 48px;">
+      <p>We have already built your website mockup. <a href="index.html" style="color: var(--gold); text-decoration: underline; text-underline-offset: 3px;">View it here</a> to see what the new JPG Travel Solutions experience could look like.</p>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGE BREAK -->
+<div class="image-break">
+  <div class="image-break-bg" style="background-image: url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80');"></div>
+  <div class="image-break-overlay"></div>
+  <div class="image-break-content">
+    <p class="image-break-quote reveal">"Your website is your first impression. It should feel like walking into a five-star lobby."</p>
+  </div>
+</div>
+
+<!-- ==================== SEO & DIGITAL STRATEGY ==================== -->
+<section id="seo">
+  <div class="section-pad">
+    <div class="section-number reveal">07</div>
+    <div class="section-label reveal reveal-delay-1">SEO &amp; Digital Strategy</div>
+    <h2 class="section-title reveal reveal-delay-2">Get found by the clients<br>who are already looking for you.</h2>
+    <div class="gold-line reveal reveal-delay-2"></div>
+    <p class="section-subtitle reveal reveal-delay-3">
+      The goal here is simple: build an organic lead generation engine so JPG is not 100% dependent on referrals. Referrals are gold, but a diversified pipeline is what separates agencies that plateau from agencies that scale.
+    </p>
+
+    <div class="grid-2 reveal" style="margin-top: 56px;">
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3>Search Engine Optimization</h3>
+        <p>Luxury travel keywords, local SEO for your market, and destination-specific landing pages that capture high-intent traffic. People searching "luxury travel advisor" or "Maldives travel planner" should find JPG.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+        </div>
+        <h3>Content Strategy</h3>
+        <p>Destination guides, travel tips, insider recommendations, and client stories. Content that positions JPG as the authority in luxury travel while driving long-term organic traffic.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+        <h3>Social Media Management</h3>
+        <p>Instagram Reels (luxury travel content gets massive engagement), Facebook presence, and Pinterest for destination inspiration. Consistent, high-quality content that builds brand authority.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <h3>Email Marketing Automation</h3>
+        <p>Drip campaigns, newsletter sequences, and targeted outreach via Brevo (free tier: 300 emails per day). Stay top-of-mind with past clients and nurture new leads on autopilot.</p>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal" style="margin-top: 24px;">
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3>Google Business Profile</h3>
+        <p>Optimized Google Business listing with reviews strategy, photos, and regular updates. Critical for local visibility and establishing trust before someone ever visits the website.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Performance Analytics</h3>
+        <p>Tracking dashboards so you can see exactly where your leads are coming from, which content performs, and how your investment is translating into real business growth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ==================== THE FREE STACK ==================== -->
+<section id="free-stack">
+  <div class="section-pad">
+    <div class="section-number reveal">08</div>
+    <div class="section-label reveal reveal-delay-1">The Free Stack</div>
+    <h2 class="section-title reveal reveal-delay-2">How much of this costs zero dollars?<br>More than you would expect.</h2>
+    <div class="gold-line reveal reveal-delay-2"></div>
+    <p class="section-subtitle reveal reveal-delay-3">
+      One of the most powerful parts of this strategy is what it does not cost. We have designed the automation stack around tools that are either already in your budget or completely free to use. Here is the breakdown.
+    </p>
+
+    <table class="stack-table reveal" style="margin-top: 48px;">
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>What It Handles</th>
+          <th>Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Monday.com</td>
+          <td>CRM, boards, automations, AI agent</td>
+          <td>Already paying</td>
+        </tr>
+        <tr>
+          <td>Brevo</td>
+          <td>Email sequences, drip campaigns, newsletters</td>
+          <td>Free (300/day)</td>
+        </tr>
+        <tr>
+          <td>Make.com</td>
+          <td>Cross-platform workflow automation</td>
+          <td>Free (1,000 ops/mo)</td>
+        </tr>
+        <tr>
+          <td>Cal.com</td>
+          <td>Consultation booking, scheduling</td>
+          <td>Free</td>
+        </tr>
+        <tr>
+          <td>Google Sheets</td>
+          <td>Commission tracking, financial reports</td>
+          <td>Free</td>
+        </tr>
+        <tr>
+          <td>Tally</td>
+          <td>Client intake forms, post-trip surveys</td>
+          <td>Free</td>
+        </tr>
+        <tr>
+          <td>AI Tools</td>
+          <td>Research, drafting, content generation</td>
+          <td>Free tiers</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="compare-row reveal" style="margin-top: 56px;">
+      <div class="compare-card old">
+        <div class="compare-price">$1,500 - $3,000</div>
+        <div class="compare-desc">Monthly cost of a virtual assistant<br>to handle administrative tasks</div>
+      </div>
+      <div class="compare-vs">vs.</div>
+      <div class="compare-card new">
+        <div class="compare-price">$0</div>
+        <div class="compare-desc">Monthly cost of the automation stack<br>that handles 60-70% of the same work</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGE BREAK -->
+<div class="image-break">
+  <div class="image-break-bg" style="background-image: url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1920&q=80');"></div>
+  <div class="image-break-overlay"></div>
+  <div class="image-break-content">
+    <p class="image-break-quote reveal">"The systems handle the work. You handle the magic."</p>
+  </div>
+</div>
+
+<!-- ==================== WHAT THIS MEANS FOR MRS. PAULA ==================== -->
+<section id="mrs-paula">
+  <div class="section-pad">
+    <div class="section-number reveal">09</div>
+    <div class="section-label reveal reveal-delay-1">For Mrs. Paula</div>
+    <h2 class="section-title reveal reveal-delay-2">What this actually means<br>for your day-to-day.</h2>
+    <div class="gold-line reveal reveal-delay-2"></div>
+    <p class="section-subtitle reveal reveal-delay-3">
+      We can talk about boards and automations and AI all day. But what matters is what changes when you sit down at your desk on a Monday morning. Here is what this transformation looks like in practice.
+    </p>
+
+    <ul class="benefit-list reveal" style="margin-top: 48px; max-width: 800px;">
+      <li>No more chasing payment deadlines manually. The system tracks every deposit, every final payment, and every confirmation. It notifies you and the client automatically.</li>
+      <li>No more building itineraries from scratch every single time. The AI agent drafts the first version based on client preferences, and your advisors refine and personalize it.</li>
+      <li>No more worrying about commission tracking falling through the cracks. Every expected payment is logged, tracked, and flagged if it does not arrive on time.</li>
+      <li>Automated client communication sequences handle the follow-ups, the pre-trip emails, the post-trip check-ins, and the birthday messages that keep relationships warm year-round.</li>
+      <li>The AI research agent handles the destination legwork. Instead of spending hours gathering information, your team reviews curated research and makes decisions faster.</li>
+      <li>Your clients get a branded app experience that makes every trip feel elevated from the moment they book to the moment they get home.</li>
+      <li>Your website finally reflects the quality of service you actually deliver, and it starts bringing in new clients organically rather than relying entirely on referrals.</li>
+    </ul>
+
+    <div class="callout reveal" style="margin-top: 48px;">
+      <p>You get to focus on what you love: the relationships, the creativity, the moments that turn a trip into something someone remembers for the rest of their life. The systems handle everything else.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ==================== NEXT STEPS ==================== -->
+<section id="next-steps">
+  <div class="section-pad">
+    <div class="section-number reveal">10</div>
+    <div class="section-label reveal reveal-delay-1">Next Steps</div>
+    <h2 class="section-title reveal reveal-delay-2">Let's get this ripping.</h2>
+    <div class="gold-line reveal reveal-delay-2"></div>
+    <p class="section-subtitle reveal reveal-delay-3">
+      We would love to meet with the full JPG Travel Solutions team to walk through this plan in person, answer every question, and start mapping this to your specific workflows. Here is what the buildout looks like.
+    </p>
+
+    <div class="timeline reveal" style="margin-top: 56px;">
+      <div class="timeline-item">
+        <div class="timeline-phase">Phase 1 &nbsp;/&nbsp; Weeks 1-3</div>
+        <div class="timeline-title">Monday.com Board Buildout &amp; Automation</div>
+        <div class="timeline-desc">Custom board architecture, automated workflows, cross-board connections, payment tracking, and communication sequences. All built on the platform you already use.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">Phase 2 &nbsp;/&nbsp; Weeks 3-7</div>
+        <div class="timeline-title">Website Redesign &amp; SEO Foundation</div>
+        <div class="timeline-desc">Full website rebuild with luxury design, proper SEO architecture, destination landing pages, Google Business optimization, and content strategy launch.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">Phase 3 &nbsp;/&nbsp; Weeks 7-13</div>
+        <div class="timeline-title">AI Agent &amp; Client Portal App</div>
+        <div class="timeline-desc">Custom AI agent deployment inside Monday.com, branded client portal app with offline capability, and full integration testing across all systems.</div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 80px;" class="reveal">
+      <p style="font-family: var(--serif); font-size: 28px; font-weight: 300; color: var(--white); margin-bottom: 16px;">Ready to transform JPG Travel Solutions?</p>
+      <p style="font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--white-dim); max-width: 500px; margin: 0 auto 36px; line-height: 1.7;">We are excited about what this can become. Let's sit down together and make it happen.</p>
+      <a href="mailto:jaden@flynndev.com" style="display: inline-block; padding: 16px 48px; border: 1px solid var(--gold); color: var(--gold); font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; transition: all 0.4s ease;" onmouseover="this.style.background='var(--gold)';this.style.color='var(--black)'" onmouseout="this.style.background='transparent';this.style.color='var(--gold)'">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="footer-brand">Flynn Development</div>
+  <p class="footer-tagline">Prepared with care by Jaden Flynn</p>
+  <p class="footer-contact">
+    <a href="mailto:jaden@flynndev.com">jaden@flynndev.com</a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    Cookeville, Tennessee
+  </p>
+</footer>
+
+<script>
+// HERO LOAD ANIMATION
+window.addEventListener('load', () => {
+  document.querySelector('.hero').classList.add('loaded');
+});
+
+// SCROLL REVEAL (Intersection Observer)
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => revealObserver.observe(el));
+
+// PROGRESS BAR
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollPercent = (scrollTop / docHeight) * 100;
+  progressBar.style.width = scrollPercent + '%';
+});
+
+// SIDE NAV TOGGLE
+const navToggle = document.getElementById('navToggle');
+const sideNav = document.getElementById('sideNav');
+const sideNavOverlay = document.getElementById('sideNavOverlay');
+
+function toggleNav() {
+  navToggle.classList.toggle('open');
+  sideNav.classList.toggle('open');
+  sideNavOverlay.classList.toggle('open');
+}
+navToggle.addEventListener('click', toggleNav);
+sideNavOverlay.addEventListener('click', toggleNav);
+
+// Close nav on link click
+sideNav.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (sideNav.classList.contains('open')) toggleNav();
+  });
+});
+
+// ACTIVE SECTION HIGHLIGHT IN NAV
+const sections = document.querySelectorAll('section[id]');
+const navLinks = sideNav.querySelectorAll('a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 200;
+    if (window.scrollY >= sectionTop) {
+      current = section.getAttribute('id');
+    }
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) {
+      link.classList.add('active');
+    }
+  });
+});
+</script>
+</body>
+</html>
