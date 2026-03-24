@@ -36,9 +36,11 @@ Paula, I want you to know that a big part of why we built this is to take weight
 
 I'm at your full disposal. Whatever questions you have, whatever ideas come up as you go through the plan, whatever you want to explore further, I'm here. Jaden and I are both looking forward to meeting with the full team soon to walk through everything in person and start mapping this to your specific workflows.
 
-This is going to be something special.
+One more reminder: please make sure you open the growth plan document on a desktop or laptop. It's built as a full interactive experience with visuals and layouts that need a bigger screen. You'll miss a lot of it on a phone. Everything we actually build for your clients will be fully mobile optimized, but this presentation was designed to be experienced properly.
 
-Talk soon,
+We genuinely believe that what we're putting together here is going to change the way you operate, free up your time, elevate how your clients experience working with you, and set JPG up to scale without the growing pains that slow most agencies down. The tech exists to make this happen right now, and we have the team to build it. We're ready when you are.
+
+Looking forward to hearing your thoughts and sitting down with the whole crew soon. Let's make something incredible together.
 
 Chief
 AI Systems Architect | Vantage Co
